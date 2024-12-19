@@ -1,7 +1,7 @@
 <template>
     <p>
         <strong>{{ name }}</strong>
-        {{ price }}
+        {{ pricePretty }}
         <button @click="addToCart">Add to cart</button>
     </p>
 
@@ -17,5 +17,10 @@
             const addToCart = () => emit('addToCart', props.name);
             return { addToCart }
         },
+        computed: {
+            pricePretty() {
+                return `$${this.price.toFixed(2)}`
+            }
+        }
     }
 </script>

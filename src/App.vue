@@ -2,26 +2,21 @@
   <h1>{{ name }}</h1>
   <input type="text" v-model="name">
   <button @click="placeOrder">Place order</button>
-  <YummyMeal name="🍔" price="4" @addToCart="addItemToCart" />
+  <YummyMeal :name="meal.name" :price="meal.price" @addToCart="addItemToCart" />
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import YummyMeal from './components/YummyMeal.vue';
 
   export default {
     components: { YummyMeal },
     setup() {
       const name = ref("The Snazzy Burger");
-      name.value = 'Hello from the setup function';
-      console.log('in seteup', '--name.value--', name.value);
+      const meal = reactive({ name: "Hamburger", price: 4.99 })
       const placeOrder = () => console.log('Your order has been placed!');
       const addItemToCart = (item) => console.log(`One ${item} added to cart`);
-      return { name, placeOrder, addItemToCart };
-    },
-    created() {
-      this.name = 'Hello from the created hook';
-      console.log('in created', '--this.name--', this.name)
+      return { name, meal, placeOrder, addItemToCart };
     }
   }
 </script>
