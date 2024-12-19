@@ -1,6 +1,7 @@
 <template>
     <p>
         <strong>{{ name }}</strong>
+        <p>{{ pricePrettySentence }}</p>
         <input type="text" v-model="pricePretty">
         <button @click="addToCart">Add to cart</button>
     </p>
@@ -25,7 +26,10 @@ import { computed } from 'vue';
                     console.log(`Sorry, we cannot accept ${price}. Nice try though`)
                 }
             });
-            return { addToCart, pricePretty }
+            const pricePrettySentence = computed(
+                () => `The price of this item is ${pricePretty.value}.`
+            );
+            return { addToCart, pricePretty, pricePrettySentence }
         }
     }
 </script>
