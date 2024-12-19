@@ -1,18 +1,29 @@
 <template>
   <h1>{{ name }}</h1>
+  <p>
+    <label for="currencySymbol">Currency</label>
+    <select id="currencySymbol" v-model="currencySymbol">
+      <option value="¥">Yen</option>
+      <option value="£">Sterling</option>
+      <option value="$">Dollars</option>
+    </select>
+  </p>
   <input type="text" v-model="name">
   <button @click="placeOrder">Place order</button>
   <button @click="removeWatcher">Hide cart alerts</button>
   <YummyMeal v-for="meal in meals" :name="meal.name" :price="meal.price" @addToCart="addItemToCart" />
+
 </template>
 
 <script>
-import { ref, reactive, watchEffect } from 'vue';
+import { ref, reactive, watch, provide } from 'vue';
 import YummyMeal from './components/YummyMeal.vue';
 
   export default {
     components: { YummyMeal },
     setup() {
+      const currencySymbol = ref('¥')
+      provide('currencySymbol', currencySymbol);
       const name = ref("The Snazzy Burger");
       const cart = reactive([])
       const meals = reactive([
@@ -23,8 +34,18 @@ import YummyMeal from './components/YummyMeal.vue';
       ])
       const placeOrder = () => console.log('Your order has been placed!');
       const addItemToCart = (item) => cart.push(item);
-      const removeWatcher = watchEffect(() => alert(cart.join('\n')));
-      return { name, meals, placeOrder, addItemToCart, removeWatcher};
+      const removeWatcher = watch(
+        [() => [...cart]], 
+        (newValue, oldValue) => alert(newValue.join('\n'))
+      );
+      return { 
+        name,
+        meals,
+        placeOrder,
+        addItemToCart,
+        removeWatcher,
+        currencySymbol
+      };
     }
   }
 </script>
