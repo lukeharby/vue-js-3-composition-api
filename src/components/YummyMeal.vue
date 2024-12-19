@@ -1,11 +1,10 @@
 <template>
     <p>
         <strong>{{ name }}</strong>
-        <p>{{ pricePrettySentence }}</p>
-        <input type="text" v-model="pricePretty">
-        <button @click="addToCart">Add to cart</button>
     </p>
-
+    <div>{{ pricePrettySentence }}</div>
+    <input type="text" v-model="pricePretty">
+    <button @click="addToCart">Add to cart</button>
 </template>
 
 <script>

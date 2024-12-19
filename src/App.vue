@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import YummyMeal from './components/YummyMeal.vue';
 
   export default {
@@ -16,6 +16,9 @@ import YummyMeal from './components/YummyMeal.vue';
       const meal = reactive({ name: "Hamburger", price: 4.99 })
       const placeOrder = () => console.log('Your order has been placed!');
       const addItemToCart = (item) => console.log(`One ${item} added to cart`);
+      watch(name, (newName, oldName) => console.log(newName, oldName), {
+        immediate: true
+      });
       return { name, meal, placeOrder, addItemToCart };
     }
   }
