@@ -2,7 +2,8 @@
   <h1>{{ name }}</h1>
   <input type="text" v-model="name">
   <button @click="placeOrder">Place order</button>
-  <YummyMeal :name="meal.name" :price="meal.price" @addToCart="addItemToCart" />
+  <button @click="removeWatcher">Hide cart alerts</button>
+  <YummyMeal v-for="meal in meals" :name="meal.name" :price="meal.price" @addToCart="addItemToCart" />
 </template>
 
 <script>
@@ -13,13 +14,20 @@ import YummyMeal from './components/YummyMeal.vue';
     components: { YummyMeal },
     setup() {
       const name = ref("The Snazzy Burger");
-      const meal = reactive({ name: "Hamburger", price: 4.99 })
+      const cart = reactive([])
+      const meals = reactive([
+        { name: "Hamburger", price: 4.99 },
+        { name: "Cheeseburger", price: 6 },
+        { name: "Veggie burger", price: 6.50 },
+        { name: "Fries", price: 2.10 }
+      ])
       const placeOrder = () => console.log('Your order has been placed!');
-      const addItemToCart = (item) => console.log(`One ${item} added to cart`);
-      watch(name, (newName, oldName) => console.log(newName, oldName), {
-        immediate: true
-      });
-      return { name, meal, placeOrder, addItemToCart };
+      const addItemToCart = (item) => cart.push(item);
+      const removeWatcher = watch(
+        [() => [...cart]], 
+        (newValue, oldValue) => alert(newValue.join('\n'))
+      );
+      return { name, meals, placeOrder, addItemToCart, removeWatcher};
     }
   }
 </script>
