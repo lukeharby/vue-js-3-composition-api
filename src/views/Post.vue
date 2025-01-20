@@ -13,7 +13,9 @@ const route = useRoute();
 const { item: post, fetchItem: fetchPost } = useResource('posts');
 const { item: user, fetchItem: fetchUser } = useResource('users');
 
-fetchPost(route.params.id);
-fetchUser(3);
+(async () => {
+  await fetchPost(route.params.id);
+  fetchUser(post.value.userId);
+})();
 
 </script>
