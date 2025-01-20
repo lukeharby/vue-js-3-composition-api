@@ -5,20 +5,16 @@
     <div>{{ post.body }}</div>
   </div>
 </template>
-<script setup>
+<script setup async>
 import { useRoute } from 'vue-router';
-import { watch } from 'vue';
 import useResource from '../composables/useResource.js';
 const route = useRoute();
 
 const { item: post, fetchItem: fetchPost } = useResource('posts');
 const { item: user, fetchItem: fetchUser } = useResource('users');
 
-fetchPost(route.params.id);
+await fetchPost(route.params.id);
+fetchUser(post.value.userId)
 
-watch(
-  () => ({...post.value}),
-  () => fetchUser(post.value.userId)
-);
 
 </script>

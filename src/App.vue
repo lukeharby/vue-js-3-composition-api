@@ -3,7 +3,18 @@
     <router-link :to="{ name: 'Home' }">Fake Blog</router-link>
   </nav>
   <div class="container">
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <template v-if="Component">
+        <suspense>
+          <template #default>
+            <component :is="Component"></component>
+          </template>
+          <template #fallback>
+            Loading...
+          </template>
+        </suspense>
+      </template>
+    </router-view>
   </div>
 </template>
 
