@@ -15,39 +15,30 @@
 
 </template>
 
-<script>
-import { ref, reactive, watch, provide } from 'vue';
-import YummyMeal from './components/YummyMeal.vue';
+<script setup>
+  import { ref, reactive, watch, provide, onMounted } from 'vue';
+  import YummyMeal from './components/YummyMeal.vue';
 
-  export default {
-    components: { YummyMeal },
-    setup() {
-      const currencySymbol = ref('¥')
-      provide('currencySymbol', currencySymbol);
-      const name = ref("The Snazzy Burger");
-      const cart = reactive([])
-      const meals = reactive([
-        { name: "Hamburger", price: 4.99 },
-        { name: "Cheeseburger", price: 6 },
-        { name: "Veggie burger", price: 6.50 },
-        { name: "Fries", price: 2.10 }
-      ])
-      const placeOrder = () => console.log('Your order has been placed!');
-      const addItemToCart = (item) => cart.push(item);
-      const removeWatcher = watch(
-        [() => [...cart]], 
-        (newValue, oldValue) => alert(newValue.join('\n'))
-      );
-      return { 
-        name,
-        meals,
-        placeOrder,
-        addItemToCart,
-        removeWatcher,
-        currencySymbol
-      };
-    }
-  }
+  const currencySymbol = ref('¥')
+  provide('currencySymbol', currencySymbol);
+  const name = ref("The Snazzy Burger");
+  const cart = reactive([])
+  const meals = reactive([
+    { name: "Hamburger", price: 4.99 },
+    { name: "Cheeseburger", price: 6 },
+    { name: "Veggie burger", price: 6.50 },
+    { name: "Fries", price: 2.10 }
+  ])
+  const placeOrder = () => console.log('Your order has been placed!');
+  const addItemToCart = (item) => cart.push(item);
+  const removeWatcher = watch(
+    [() => [...cart]], 
+    (newValue, oldValue) => alert(newValue.join('\n'))
+  );
+
+  onMounted(() => {
+    console.log(name.value);
+  });
 </script>
 
 <style scoped>
