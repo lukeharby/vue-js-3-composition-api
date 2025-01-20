@@ -7,15 +7,18 @@
 </template>
 <script setup>
 import { useRoute } from 'vue-router';
+import { watch } from 'vue';
 import useResource from '../composables/useResource.js';
 const route = useRoute();
 
 const { item: post, fetchItem: fetchPost } = useResource('posts');
 const { item: user, fetchItem: fetchUser } = useResource('users');
 
-(async () => {
-  await fetchPost(route.params.id);
-  fetchUser(post.value.userId);
-})();
+fetchPost(route.params.id);
+
+watch(
+  () => ({...post.value}),
+  () => fetchUser(post.value.userId)
+);
 
 </script>
