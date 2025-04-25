@@ -14,7 +14,7 @@
     style="border: 1px solid #eee"
   >
     <img
-      src="https://via.placeholder.com/150"
+      src="https://dummyimage.com/200"
       style="background: #cccccc"
       width="150"
       height="150"
